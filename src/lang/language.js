@@ -1,0 +1,52 @@
+const Language = {
+    en: {
+        menuProducts: 'Products',
+        menuCategories: 'Categories',
+        productList: "Product List",
+        productName: "Product name",
+        quantity: "Quantity",
+        price: "Price",
+        category: "Category",
+        Action: "Action",
+        btnEdit: "Edit",
+        btnDelete: "Delete",
+        addProduct: "Add product",
+        phProductName: "Product name",
+        phQuantity: "Quantity",
+        phPrice: "Price",
+        phSelect: '-Select-',
+        btnCancel: "Cancel",
+        btnAdd: "Add",
+        msgEmptyFields: "There are some fields empty!",
+        categoryName: "Category name",
+        titleCategory: "Add category",
+        categoryList: "Category list",
+        details: "Details"
+    },
+    es: {
+        menuProducts: 'Productos',
+        menuCategories: 'Categorías',
+        productList: "Lista de productos",
+        productName: "Nombre del producto",
+        quantity: "Cantidad",
+        price: "Precio",
+        category: "Categoría",
+        Action: "Acción",
+        btnEdit: "Editar",
+        btnDelete: "Eliminar",
+        addProduct: "Adicionar producto",
+        phProductName: "Nombre del producto",
+        phQuantity: "Cantidad",
+        phPrice: "Precio",
+        phSelect: '-Seleccionar-',
+        btnCancel: "Cancelar",
+        btnAdd: "Adicionar",
+        msgEmptyFields: "¡Hay algunos campos vacíos!",
+        categoryName: "Nombre de categoría",
+        titleCategory: "Adicionar categoría",
+        categoryList: "Lista de categorías",
+        details: "Detalles"
+    }
+};
+
+export default Language;

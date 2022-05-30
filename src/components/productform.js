@@ -1,4 +1,5 @@
 import React from 'react';
+import LangContext from '../contexts/langContext';
 
 /**
  * This is a product form component.
@@ -87,13 +88,13 @@ class ProductForm extends React.Component {
         if (this.state._id != '') {
             return (
                 <>
-                    <button type="submit" className="btn btn-primary" onClick={this.onEditFormAction}>Edit</button>
-                    <a className="btn btn-danger" onClick={this.clearValues}>Cancel</a>
+                    <button type="submit" className="btn btn-primary" onClick={this.onEditFormAction}>{this.context.languages.btnEdit}</button>
+                    <a className="btn btn-danger" onClick={this.clearValues}>{this.context.languages.btnCancel}</a>
                 </>
             );
         }
         return (
-            <button type="submit" className="btn btn-primary" onClick={this.onAddFormAction}>Add</button>
+            <button type="submit" className="btn btn-primary" onClick={this.onAddFormAction}>{this.context.languages.btnAdd}</button>
         );
     };
 
@@ -106,74 +107,80 @@ class ProductForm extends React.Component {
             return true;
         });
         if (!isValid) {
-            alert("There are some fields empty!");
+            alert(this.context.languages.msgEmptyFields);
         }
         return isValid;
     };
 
     render = () => {
         return (
-            <div className='card mb-2 mt-2'>
-                <div className='card-body'>
-                    <h5 className="card-title">Add product</h5>
-                    <hr className='divider' />
-                    <form method='post' name='form-product'>
-                        <div className='row mb-2'>
-                            <div className="col">
-                                <input type="text"
-                                    className="form-control"
-                                    id="product_name"
-                                    name="product_name"
-                                    placeholder='Product name'
-                                    value={this.state.product_name}
-                                    required={true}
-                                    onChange={e => this.onChangedData(e, 'product_name')} />
-                            </div>
-                            <div className="col">
-                                <input type="number"
-                                    className="form-control"
-                                    id="product_quantity"
-                                    name="product_quantity"
-                                    placeholder='Quantity'
-                                    value={this.state.quantity}
-                                    required={true}
-                                    onChange={e => this.onChangedData(e, 'quantity')} />
-                            </div>
-                            <div className="col">
-                                <input type="number"
-                                    className="form-control"
-                                    id="product_price"
-                                    name="product_price"
-                                    placeholder='Price'
-                                    value={this.state.price}
-                                    required={true}
-                                    onChange={e => this.onChangedData(e, 'price')} />
-                            </div>
-                            <div className="col">
-                                <select placeholder='Select a category'
-                                    className="form-select"
-                                    id="category"
-                                    name="category"
-                                    value={this.state.category}
-                                    required={true}
-                                    onChange={e => this.onChangedData(e, 'category')}>
-                                    <option value={'-1'}>-Select-</option>
-                                    {
-                                        this.state.categories.map(c => <option value={c._id}>{c.category_name}</option>)
-                                    }
-                                </select>
-                            </div>
-                            <div className='col'>
-                                <div className="d-grid gap-2 d-md-flex">
-                                    {this.showButtons()}
+            <LangContext.Consumer>
+                {({ languages }) => (
+                    <div className='card mb-2 mt-2'>
+                        <div className='card-body'>
+                            <h5 className="card-title">{languages.addProduct}</h5>
+                            <hr className='divider' />
+                            <form method='post' name='form-product'>
+                                <div className='row mb-2'>
+                                    <div className="col">
+                                        <input type="text"
+                                            className="form-control"
+                                            id="product_name"
+                                            name="product_name"
+                                            placeholder={languages.phProductName}
+                                            value={this.state.product_name}
+                                            required={true}
+                                            onChange={e => this.onChangedData(e, 'product_name')} />
+                                    </div>
+                                    <div className="col">
+                                        <input type="number"
+                                            className="form-control"
+                                            id="product_quantity"
+                                            name="product_quantity"
+                                            placeholder={languages.phQuantity}
+                                            value={this.state.quantity}
+                                            required={true}
+                                            onChange={e => this.onChangedData(e, 'quantity')} />
+                                    </div>
+                                    <div className="col">
+                                        <input type="number"
+                                            className="form-control"
+                                            id="product_price"
+                                            name="product_price"
+                                            placeholder={languages.phPrice}
+                                            value={this.state.price}
+                                            required={true}
+                                            onChange={e => this.onChangedData(e, 'price')} />
+                                    </div>
+                                    <div className="col">
+                                        <select placeholder='Select a category'
+                                            className="form-select"
+                                            id="category"
+                                            name="category"
+                                            value={this.state.category}
+                                            required={true}
+                                            onChange={e => this.onChangedData(e, 'category')}>
+                                            <option value={'-1'}>{languages.phSelect}</option>
+                                            {
+                                                this.state.categories.map((c, i) => <option key={i} value={c._id}>{c.category_name}</option>)
+                                            }
+                                        </select>
+                                    </div>
+                                    <div className='col'>
+                                        <div className="d-grid gap-2 d-md-flex">
+                                            {this.showButtons()}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+                )}
+            </LangContext.Consumer>
         );
     }
 }
+
+ProductForm.contextType = LangContext;
 
 export default ProductForm;

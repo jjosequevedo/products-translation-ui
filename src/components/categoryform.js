@@ -1,11 +1,11 @@
 import React from 'react';
+import LangContext from '../contexts/langContext';
 
 class CategoryForm extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            title: 'Add Category',
             _id: '',
             category_name: '',
         };
@@ -59,13 +59,13 @@ class CategoryForm extends React.Component {
         if (this.state._id != '') {
             return (
                 <>
-                    <button type="submit" className="btn btn-primary" onClick={this.onEditCategoryAction}>Edit</button>
-                    <a className="btn btn-danger" onClick={this.clearValues}>Cancel</a>
+                    <button type="submit" className="btn btn-primary" onClick={this.onEditCategoryAction}>{this.context.languages.btnEdit}</button>
+                    <a className="btn btn-danger" onClick={this.clearValues}>{this.context.languages.btnCancel}</a>
                 </>
             );
         }
         return (
-            <button type="submit" className="btn btn-primary" onClick={this.onAddCategoryAction}>Add</button>
+            <button type="submit" className="btn btn-primary" onClick={this.onAddCategoryAction}>{this.context.languages.btnAdd}</button>
         );
     };
 
@@ -78,40 +78,46 @@ class CategoryForm extends React.Component {
             return true;
         });
         if (!isValid) {
-            alert("There are some fields empty!");
+            alert(this.context.languages.msgEmptyFields);
         }
         return isValid;
     };
 
     render() {
         return (
-            <div className='card mb-2 mt-2'>
-                <div className='card-body'>
-                    <h5 className="card-title">{this.state.title}</h5>
-                    <hr className='divider' />
-                    <form method='post' name='form-category'>
-                        <div className='row mb-2'>
-                            <div className="col">
-                                <input type="text"
-                                    className="form-control"
-                                    id="category_name"
-                                    name="category_name"
-                                    placeholder='Category name'
-                                    value={this.state.category_name}
-                                    required={true}
-                                    onChange={this.onChanged} />
-                            </div>
-                            <div className='col'>
-                                <div className="d-grid gap-2 d-md-flex">
-                                    {this.showButtons()}
+            <LangContext.Consumer>
+                {({ languages }) => (
+                    <div className='card mb-2 mt-2'>
+                        <div className='card-body'>
+                            <h5 className="card-title">{languages.titleCategory}</h5>
+                            <hr className='divider' />
+                            <form method='post' name='form-category'>
+                                <div className='row mb-2'>
+                                    <div className="col">
+                                        <input type="text"
+                                            className="form-control"
+                                            id="category_name"
+                                            name="category_name"
+                                            placeholder={languages.categoryName}
+                                            value={this.state.category_name}
+                                            required={true}
+                                            onChange={this.onChanged} />
+                                    </div>
+                                    <div className='col'>
+                                        <div className="d-grid gap-2 d-md-flex">
+                                            {this.showButtons()}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+                )}
+            </LangContext.Consumer>
         );
     }
 }
+
+CategoryForm.contextType = LangContext;
 
 export default CategoryForm;
